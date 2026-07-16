@@ -4,7 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peter Baho — Fotograf, Stockholm</title>
-  <meta name="description" content="Peter Baho är fotograf i Stockholm. Bröllop, vigsel, event och kommersiellt foto — filmiskt, varmt och nära.">
+  <meta name="description" content="Peter Baho är fotograf i Stockholm. Wedding & civil marriage, event och commercial — filmiskt, varmt och nära.">
+  <meta name="theme-color" content="#FAFAF8">
+  <link rel="canonical" href="https://nataniel0212.github.io/peterbaho/">
+  <meta property="og:title" content="Peter Baho — Fotograf, Stockholm">
+  <meta property="og:description" content="Bröllop, vigsel, event och kommersiellt foto — filmiskt, varmt och nära.">
+  <meta property="og:image" content="https://nataniel0212.github.io/peterbaho/images/wedding-17.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111110'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='28' fill='%23FAFAF8' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
+  <link rel="preload" as="image" href="images/wedding-17.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
@@ -12,43 +20,48 @@
 </head>
 <body>
 
-  <header class="site-header on-hero">
-    <a class="brand" href="index.html">Peter Baho</a>
-    <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="katalog.html">Katalog</a>
+  <!-- Meny (tre streck) -->
+  <button class="menu-btn" aria-label="Öppna meny" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Meny" hidden>
+    <button class="menu-close" aria-label="Stäng meny">✕</button>
+    <nav class="menu-nav">
+      <a href="katalog.html#commercial">Commercial</a>
+      <a href="katalog.html#wedding">Wedding &amp; Civil Marriage</a>
+      <a href="katalog.html#event">Event</a>
+      <a href="info.html">Info</a>
       <a href="kontakt.html">Kontakt</a>
     </nav>
+  </div>
+
+  <!-- Namnet överst, sedan bilden -->
+  <header class="masthead">
+    <h1 class="masthead-name">Peter Baho</h1>
+    <p class="masthead-tag">Fotograf — Stockholm</p>
   </header>
 
   <main>
 
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <div class="hero-media">
-        <img src="images/wedding-17.jpg" alt="Bröllopsfölje som korsar en allé i gyllene kvällsljus" fetchpriority="high">
-      </div>
-      <div class="hero-text">
-        <p class="eyebrow">Fotograf — Stockholm</p>
-        <h1>Peter <em>Baho</em></h1>
-        <p class="hero-sub">Bröllop, vigsel, event &amp; kommersiellt.<br>Fotograferat på filmkänsla — korn, motljus och rörelse.</p>
-      </div>
-      <p class="hero-hint" aria-hidden="true">Skrolla ↓</p>
-    </section>
+    <figure class="work full lead reveal">
+      <div class="frame"><img src="images/wedding-17.jpg" alt="Bröllopsfölje som korsar en allé i gyllene kvällsljus" fetchpriority="high" width="2400" height="1600"></div>
+      <figcaption>Följet — wedding</figcaption>
+    </figure>
 
-    <!-- ================= UTVALT ================= -->
     <section class="showcase">
 
-      <p class="statement reveal">Ett urval ur arkivet —<br><em>resten hittar du i katalogen.</em></p>
+      <p class="statement reveal">Ett urval ur arkivet —<br><em>resten hittar du i menyn.</em></p>
 
       <figure class="work full reveal">
         <div class="frame"><img src="images/wedding-18.jpg" alt="Kyss i solnedgången" loading="lazy" width="1120" height="1400"></div>
-        <figcaption>Sista ljuset — bröllop</figcaption>
+        <figcaption>Sista ljuset — wedding</figcaption>
       </figure>
 
       <div class="duo">
         <figure class="work reveal">
           <img src="images/couple-03.jpg" alt="Paret dansar i gränden, rörelseoskärpa" loading="lazy" width="1600" height="2400">
-          <figcaption>Dansen i gränden — Gamla stan</figcaption>
+          <figcaption>Dansen i gränden — civil marriage</figcaption>
         </figure>
         <figure class="work shift-down reveal">
           <img src="images/wedding-11.jpg" alt="Brud i slöja vid fönstret" loading="lazy" width="1120" height="1400">
@@ -58,13 +71,13 @@
 
       <figure class="work full reveal">
         <div class="frame"><img src="images/club-07.jpg" alt="Konfetti faller över dansgolvet i grönt ljus" loading="lazy" width="2100" height="1400"></div>
-        <figcaption>Konfettiregnet — Café Opera</figcaption>
+        <figcaption>Konfettiregnet — event</figcaption>
       </figure>
 
       <div class="duo rev">
         <figure class="work reveal">
           <img src="images/wedding-14.jpg" alt="Kröningsögonblick under vigseln" loading="lazy" width="2400" height="3000">
-          <figcaption>Kröningen — vigsel</figcaption>
+          <figcaption>Kröningen — wedding</figcaption>
         </figure>
         <figure class="work shift-down reveal">
           <img src="images/family-01.jpg" alt="Mamma håller sitt nyfödda barn vid den vita väggen" loading="lazy" width="1120" height="1400">
@@ -79,13 +92,17 @@
         </figure>
         <figure class="work shift-down reveal">
           <img src="images/brand-04.jpg" alt="Modell i solglasögon framför skivsamlingen" loading="lazy" width="1120" height="1400">
-          <figcaption>Skivhyllan — kampanj</figcaption>
+          <figcaption>Skivhyllan — commercial</figcaption>
         </figure>
       </div>
 
       <div class="cta-block reveal">
         <p class="eyebrow">49 bilder i tre kategorier</p>
-        <a class="cta" href="katalog.html">Se hela katalogen</a>
+        <nav class="cta-row" aria-label="Kategorier">
+          <a class="cta" href="katalog.html#wedding">Wedding</a>
+          <a class="cta ghost" href="katalog.html#event">Event</a>
+          <a class="cta ghost" href="katalog.html#commercial">Commercial</a>
+        </nav>
       </div>
 
     </section>
@@ -95,7 +112,7 @@
   <footer class="site-footer">
     <p>© 2026 Peter Baho — Stockholm</p>
     <nav>
-      <a href="katalog.html">Katalog</a>
+      <a href="info.html">Info</a>
       <a href="kontakt.html">Kontakt</a>
       <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
     </nav>

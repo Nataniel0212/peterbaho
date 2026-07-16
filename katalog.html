@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Katalog — Peter Baho</title>
-  <meta name="description" content="Hela katalogen: bröllop och borgerlig vigsel, event och kommersiellt foto av Peter Baho.">
+  <title>Portfolio — Peter Baho</title>
+  <meta name="description" content="Wedding & civil marriage, event och commercial — hela arkivet av fotograf Peter Baho, Stockholm.">
+  <meta name="theme-color" content="#FAFAF8">
+  <link rel="canonical" href="https://nataniel0212.github.io/peterbaho/katalog.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111110'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='28' fill='%23FAFAF8' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
@@ -12,39 +15,51 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <a class="brand" href="index.html">Peter Baho</a>
-    <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="katalog.html" aria-current="page">Katalog</a>
+  <!-- Meny (tre streck) -->
+  <button class="menu-btn" aria-label="Öppna meny" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Meny" hidden>
+    <button class="menu-close" aria-label="Stäng meny">✕</button>
+    <nav class="menu-nav">
+      <a href="#commercial">Commercial</a>
+      <a href="#wedding">Wedding &amp; Civil Marriage</a>
+      <a href="#event">Event</a>
+      <a href="info.html">Info</a>
       <a href="kontakt.html">Kontakt</a>
     </nav>
+  </div>
+
+  <header class="masthead small">
+    <a class="masthead-name" href="index.html">Peter Baho</a>
   </header>
 
   <main class="page">
 
     <header class="page-head">
-      <p class="eyebrow reveal">Arkivet</p>
-      <h1 class="reveal">Katalog</h1>
-      <p class="page-note reveal">Tre kategorier, 49 bilder. Klicka på en bild för att se den större.</p>
+      <p class="eyebrow reveal">Portfolio</p>
+      <h1 class="reveal" id="cat-title">Wedding &amp; Civil Marriage</h1>
+      <p class="page-note reveal">Klicka på en bild för att se den större.</p>
     </header>
 
     <div class="cat-tabs reveal" role="tablist" aria-label="Kategorier">
-      <button class="cat-tab" role="tab" data-cat="brollop" aria-selected="true">
-        <span class="cat-name">Bröllop &amp; Vigsel</span>
+      <button class="cat-tab" role="tab" data-cat="wedding" aria-selected="true">
+        <span class="cat-name">Wedding &amp; Civil Marriage</span>
         <span class="cat-count">25 bilder</span>
       </button>
       <button class="cat-tab" role="tab" data-cat="event" aria-selected="false">
         <span class="cat-name">Event</span>
         <span class="cat-count">14 bilder</span>
       </button>
-      <button class="cat-tab" role="tab" data-cat="kommersiellt" aria-selected="false">
-        <span class="cat-name">Kommersiellt</span>
+      <button class="cat-tab" role="tab" data-cat="commercial" aria-selected="false">
+        <span class="cat-name">Commercial</span>
         <span class="cat-count">10 bilder</span>
       </button>
     </div>
 
-    <!-- ============ BRÖLLOP & VIGSEL ============ -->
-    <section class="cat-gallery" id="cat-brollop" role="tabpanel">
+    <!-- ============ WEDDING & CIVIL MARRIAGE ============ -->
+    <section class="cat-gallery" id="cat-wedding" role="tabpanel">
       <p class="cat-intro reveal">Kyrkbröllop och borgerlig vigsel — från förberedelserna till sista ljuset.</p>
       <div class="masonry frames">
         <figure class="work"><img src="images/wedding-15.jpg" alt="Brudpar i kyrkans mittgång" loading="lazy" width="2400" height="1600"><figcaption>Mittgången</figcaption></figure>
@@ -96,8 +111,8 @@
       </div>
     </section>
 
-    <!-- ============ KOMMERSIELLT ============ -->
-    <section class="cat-gallery" id="cat-kommersiellt" role="tabpanel" hidden>
+    <!-- ============ COMMERCIAL ============ -->
+    <section class="cat-gallery" id="cat-commercial" role="tabpanel" hidden>
       <p class="cat-intro reveal">Lookbook, kampanj och porträtt för varumärken och familjer — på plats, inte i studio.</p>
       <div class="masonry frames">
         <figure class="work"><img src="images/brand-04.jpg" alt="Modell i solglasögon framför skivsamlingen" loading="lazy" width="1120" height="1400"><figcaption>Skivhyllan</figcaption></figure>
@@ -119,8 +134,8 @@
     <p>© 2026 Peter Baho — Stockholm</p>
     <nav>
       <a href="index.html">Hem</a>
+      <a href="info.html">Info</a>
       <a href="kontakt.html">Kontakt</a>
-      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
     </nav>
   </footer>
 

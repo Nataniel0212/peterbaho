@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kontakt — Peter Baho</title>
-  <meta name="description" content="Kontakta fotograf Peter Baho i Stockholm — bröllop, vigsel, event och kommersiella uppdrag.">
+  <meta name="description" content="Kontakta fotograf Peter Baho i Stockholm — wedding, event och commercial-uppdrag.">
+  <meta name="theme-color" content="#FAFAF8">
+  <link rel="canonical" href="https://nataniel0212.github.io/peterbaho/kontakt.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111110'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='28' fill='%23FAFAF8' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
@@ -12,12 +15,24 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <a class="brand" href="index.html">Peter Baho</a>
-    <nav class="site-nav" aria-label="Huvudmeny">
-      <a href="katalog.html">Katalog</a>
+  <!-- Meny (tre streck) -->
+  <button class="menu-btn" aria-label="Öppna meny" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Meny" hidden>
+    <button class="menu-close" aria-label="Stäng meny">✕</button>
+    <nav class="menu-nav">
+      <a href="katalog.html#commercial">Commercial</a>
+      <a href="katalog.html#wedding">Wedding &amp; Civil Marriage</a>
+      <a href="katalog.html#event">Event</a>
+      <a href="info.html">Info</a>
       <a href="kontakt.html" aria-current="page">Kontakt</a>
     </nav>
+  </div>
+
+  <header class="masthead small">
+    <a class="masthead-name" href="index.html">Peter Baho</a>
   </header>
 
   <main class="page">
@@ -40,23 +55,9 @@
 
       <div class="contact-body">
         <p class="contact-lead reveal">
-          Jag heter Peter Baho och är fotograf i Stockholm. Mitt bildspråk är
-          filmiskt och varmt — korn, motljus och rörelse framför tillrättalagda
-          uppställningar. Jag arbetar nära men diskret: de bästa bilderna tas
-          när ingen tänker på kameran.
+          Skriv några rader om vad du planerar — datum, plats och vad du är ute
+          efter — så återkommer jag inom ett dygn.
         </p>
-        <p class="contact-lead reveal">
-          Jag tar uppdrag i hela Sverige och gärna utomlands. Bröllop bokas ofta
-          ett år i förväg — hör av dig i god tid.
-        </p>
-
-        <ul class="services reveal">
-          <li>Bröllop &amp; vigsel</li>
-          <li>Par &amp; förlovning</li>
-          <li>Klubb &amp; event</li>
-          <li>Kampanj &amp; lookbook</li>
-          <li>Familj &amp; nyfödd</li>
-        </ul>
 
         <dl class="contact-details reveal">
           <div>
@@ -86,10 +87,10 @@
           <div class="field">
             <label for="f-type">Vad gäller det?</label>
             <select id="f-type" name="type">
-              <option>Bröllop / vigsel</option>
+              <option>Wedding / civil marriage</option>
               <option>Par / förlovning</option>
               <option>Event</option>
-              <option>Kommersiellt</option>
+              <option>Commercial</option>
               <option>Annat</option>
             </select>
           </div>
@@ -110,7 +111,7 @@
     <p>© 2026 Peter Baho — Stockholm</p>
     <nav>
       <a href="index.html">Hem</a>
-      <a href="katalog.html">Katalog</a>
+      <a href="info.html">Info</a>
       <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
     </nav>
   </footer>

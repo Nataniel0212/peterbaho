@@ -1,3 +1,43 @@
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- Helskärmsmeny (tre streck) ----------
+const menuBtn = document.querySelector('.menu-btn');
+const menu = document.querySelector('.menu');
+
+if (menuBtn && menu) {
+  const menuClose = menu.querySelector('.menu-close');
+
+  function openMenu() {
+    menu.hidden = false;
+    menuBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    menuClose.focus();
+  }
+
+  function closeMenu() {
+    menu.hidden = true;
+    menuBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    menuBtn.focus();
+  }
+
+  menuBtn.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+
+  // Länk i menyn: stäng den (hashbyte på samma sida laddar inte om sidan)
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.hidden = true;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) closeMenu();
+  });
+}
+
 // ---------- Bildrutenummer i gallerier (t.ex. "07 / 25") ----------
 document.querySelectorAll('.frames').forEach((container) => {
   const frames = container.querySelectorAll('.work');
@@ -8,66 +48,7 @@ document.querySelectorAll('.frames').forEach((container) => {
   });
 });
 
-// ---------- Header: mörk text när heron skrollats förbi ----------
-const heroHeader = document.querySelector('.site-header.on-hero');
-const hero = document.querySelector('.hero');
-
-if (heroHeader && hero) {
-  const updateHeader = () => {
-    heroHeader.classList.toggle('scrolled', window.scrollY > hero.offsetHeight - 90);
-  };
-  window.addEventListener('scroll', updateHeader, { passive: true });
-  updateHeader();
-}
-
-// ---------- Scrolldrivna animationer: parallax + herotext ----------
-const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const parallaxFrames = Array.from(document.querySelectorAll('.work.full .frame'));
-const heroText = document.querySelector('.hero-text');
-
-if (motionOk && (parallaxFrames.length || heroText)) {
-  let ticking = false;
-
-  const updateScrollFx = () => {
-    ticking = false;
-    const vh = window.innerHeight;
-
-    // Helbleed-bilder glider långsamt i sin ram
-    parallaxFrames.forEach((frame) => {
-      const rect = frame.getBoundingClientRect();
-      if (rect.bottom < -100 || rect.top > vh + 100) return;
-      const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
-      const img = frame.querySelector('img');
-      img.style.transform = `scale(1.12) translateY(${(progress * -5).toFixed(2)}%)`;
-    });
-
-    // Herotexten tonar bort när man skrollar ned
-    if (heroText && hero) {
-      const y = window.scrollY;
-      const range = hero.offsetHeight * 0.55;
-      if (y < range + 200) {
-        const t = Math.min(1, y / range);
-        heroText.style.opacity = String(1 - t);
-        heroText.style.transform = `translateY(${(t * 30).toFixed(1)}px)`;
-      }
-    }
-  };
-
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateScrollFx);
-      }
-    },
-    { passive: true }
-  );
-  updateScrollFx();
-}
-
 // ---------- Scrollavslöjande ----------
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const reveals = document.querySelectorAll('.reveal');
 
 if (prefersReducedMotion) {
@@ -87,15 +68,54 @@ if (prefersReducedMotion) {
   reveals.forEach((el) => observer.observe(el));
 }
 
-// ---------- Katalog: kategoriflikar ----------
-const tabs = document.querySelectorAll('.cat-tab');
+// ---------- Parallax på helbleed-bilder ----------
+const parallaxFrames = Array.from(document.querySelectorAll('.work.full .frame'));
 
-function showCategory(cat) {
+if (!prefersReducedMotion && parallaxFrames.length) {
+  let ticking = false;
+
+  const updateParallax = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    parallaxFrames.forEach((frame) => {
+      const rect = frame.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) return;
+      const progress = (rect.top + rect.height / 2 - vh / 2) / vh;
+      const img = frame.querySelector('img');
+      img.style.transform = `scale(1.12) translateY(${(progress * -5).toFixed(2)}%)`;
+    });
+  };
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateParallax);
+      }
+    },
+    { passive: true }
+  );
+  updateParallax();
+}
+
+// ---------- Katalog: kategorier (via flikar eller meny-hash) ----------
+const tabs = document.querySelectorAll('.cat-tab');
+const catTitle = document.getElementById('cat-title');
+const CAT_NAMES = {
+  wedding: 'Wedding & Civil Marriage',
+  event: 'Event',
+  commercial: 'Commercial',
+};
+
+function showCategory(cat, updateHash = true) {
+  if (!CAT_NAMES[cat]) return;
   tabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.cat === cat)));
   document.querySelectorAll('.cat-gallery').forEach((gallery) => {
     gallery.hidden = gallery.id !== `cat-${cat}`;
   });
-  history.replaceState(null, '', `#${cat}`);
+  if (catTitle) catTitle.textContent = CAT_NAMES[cat];
+  if (updateHash) history.replaceState(null, '', `#${cat}`);
 }
 
 if (tabs.length) {
@@ -103,8 +123,13 @@ if (tabs.length) {
     tab.addEventListener('click', () => showCategory(tab.dataset.cat));
   });
 
-  const initial = location.hash.replace('#', '');
-  if (initial && document.getElementById(`cat-${initial}`)) showCategory(initial);
+  const readHash = () => {
+    const cat = location.hash.replace('#', '');
+    if (CAT_NAMES[cat]) showCategory(cat, false);
+  };
+
+  window.addEventListener('hashchange', readHash);
+  readHash();
 }
 
 // ---------- Lightbox med bläddring (inom samma galleri/sida) ----------
@@ -121,7 +146,6 @@ if (lightbox) {
   let lastFocused = null;
 
   function visibleWorks(fromWork) {
-    // bläddra bara bland bilder i samma galleri (eller hela sidan på framsidan)
     const gallery = fromWork.closest('.cat-gallery');
     const scope = gallery || document;
     return Array.from(scope.querySelectorAll('.work'));
