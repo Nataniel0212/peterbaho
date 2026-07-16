@@ -105,6 +105,7 @@ const CAT_NAMES = {
   wedding: 'Wedding & Civil Marriage',
   event: 'Event',
   commercial: 'Commercial',
+  personal: 'Personal Projects',
 };
 
 if (catTitle) {
