@@ -1,0 +1,636 @@
+/* ============================================================
+   Peter Baho — Fotograf, Stockholm
+   Koncept: monokrom editorial — bilderna bär all färg, gränssnittet
+   håller sig till papper, bläck och grått. Ingen accentfärg.
+
+   Palett:   papper #FAFAF8   panel #F0F0EC
+             bläck  #111110   dov   #70706B   linje #E3E3DE
+   Typografi: Fraunces (display) · Archivo (etiketter/brödtext)
+   ============================================================ */
+
+:root {
+  --paper: #FAFAF8;
+  --panel: #F0F0EC;
+  --ink: #111110;
+  --muted: #70706B;
+  --line: #E3E3DE;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+/* ---------- Återkommande ---------- */
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1, h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+h1 em, h2 em, .statement em { font-style: italic; font-weight: 300; }
+
+.frame-label {
+  margin-top: 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.1rem var(--gutter);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Ovanpå heron: transparent och ljus text */
+.site-header.on-hero {
+  position: fixed;
+  inset: 0 0 auto 0;
+  background: linear-gradient(rgba(12, 11, 10, 0.55), rgba(12, 11, 10, 0));
+  backdrop-filter: none;
+  border-bottom: none;
+}
+
+.brand {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-nav { display: flex; gap: 1.75rem; }
+
+.site-nav a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s, opacity 0.25s;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible { border-bottom-color: var(--ink); }
+
+.site-nav a[aria-current="page"] { border-bottom-color: var(--ink); }
+
+.on-hero .brand, .on-hero .site-nav a { color: #F4F4F1; }
+.on-hero .site-nav a:hover,
+.on-hero .site-nav a:focus-visible { border-bottom-color: #F4F4F1; }
+
+/* När man skrollat förbi heron: växla till ljus header med mörk text */
+.on-hero.scrolled {
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.on-hero.scrolled .brand, .on-hero.scrolled .site-nav a { color: var(--ink); }
+.on-hero.scrolled .site-nav a:hover,
+.on-hero.scrolled .site-nav a:focus-visible { border-bottom-color: var(--ink); }
+
+/* ---------- Hero (framsidan) ---------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-media { position: absolute; inset: 0; }
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: hero-zoom 7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1.07); }
+  to   { transform: scale(1); }
+}
+
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(12, 11, 10, 0.72) 0%,
+    rgba(12, 11, 10, 0.16) 45%,
+    rgba(12, 11, 10, 0.12) 100%
+  );
+}
+
+.hero-text {
+  position: relative;
+  padding: 0 var(--gutter) clamp(3rem, 9vh, 6rem);
+  animation: hero-rise 1.4s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero h1 {
+  font-size: clamp(3.5rem, 12vw, 10.5rem);
+  line-height: 0.95;
+  margin: 0.5rem 0 1.25rem;
+  color: #F6F6F3;
+}
+
+.hero .eyebrow { color: rgba(246, 246, 243, 0.75); }
+
+.hero-sub {
+  max-width: 44ch;
+  color: rgba(246, 246, 243, 0.85);
+  font-size: 0.95rem;
+}
+
+.hero-hint {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(3rem, 9vh, 6rem);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246, 246, 243, 0.7);
+}
+
+/* ---------- Utvalt (framsidan) ---------- */
+
+.showcase { padding: 0 var(--gutter) clamp(5rem, 12vh, 9rem); }
+
+.statement {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+  line-height: 1.2;
+  max-width: 24ch;
+  padding: clamp(5rem, 14vh, 10rem) 0 clamp(3rem, 8vh, 6rem);
+}
+
+.work { position: relative; cursor: zoom-in; }
+
+.work img { width: 100%; }
+
+.work figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Bildrutenummer (sätts av JS i katalogens gallerier) */
+.work figcaption[data-frame] { display: flex; gap: 1rem; }
+
+.work figcaption[data-frame]::before {
+  content: attr(data-frame);
+  color: var(--ink);
+}
+
+/* Helbleed med parallax: bilden är något större och glider i sin ram */
+.work.full {
+  margin: clamp(3rem, 8vh, 6rem) calc(-1 * var(--gutter));
+}
+
+.work.full .frame {
+  overflow: hidden;
+}
+
+.work.full .frame img {
+  transform: scale(1.12);
+  will-change: transform;
+}
+
+.work.full figcaption { padding: 0 var(--gutter); }
+
+/* Bildpar med förskjutning */
+.duo {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  margin: clamp(3rem, 8vh, 6rem) 0;
+}
+
+.duo.rev { grid-template-columns: 5fr 7fr; }
+
+.shift-down { margin-top: clamp(3rem, 10vh, 7rem); }
+
+/* CTA */
+
+.cta-block {
+  text-align: center;
+  padding-top: clamp(4rem, 10vh, 7rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta {
+  display: inline-block;
+  font: 500 0.78rem/1 var(--sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 1.1rem 2.4rem;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.cta:hover, .cta:focus-visible { background: transparent; color: var(--ink); }
+
+/* ---------- Undersidor ---------- */
+
+.page { padding: clamp(4rem, 10vh, 7rem) var(--gutter) clamp(5rem, 12vh, 9rem); }
+
+.page-head { margin-bottom: clamp(2.5rem, 6vh, 4rem); }
+
+.page-head h1 {
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  line-height: 1;
+  margin: 0.75rem 0 1rem;
+}
+
+.page-note { max-width: 48ch; color: var(--muted); }
+
+/* ---------- Katalog: kategoriflikar ---------- */
+
+.cat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+.cat-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  font-family: var(--sans);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.cat-tab:hover { border-color: var(--ink); }
+
+.cat-tab[aria-selected="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.cat-name {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.cat-count {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cat-tab[aria-selected="true"] .cat-name { color: var(--paper); }
+.cat-tab[aria-selected="true"] .cat-count { color: #A9A9A2; }
+
+.cat-intro {
+  max-width: 52ch;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+}
+
+/* ---------- Galleri (masonry) ---------- */
+
+.masonry {
+  columns: 3;
+  column-gap: 1.5rem;
+}
+
+.masonry .work {
+  break-inside: avoid;
+  margin-bottom: 2.25rem;
+}
+
+/* ---------- Kontakt ---------- */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 400px) 1fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.portrait-placeholder {
+  aspect-ratio: 4 / 5;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.monogram {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(4rem, 8vw, 6.5rem);
+  color: var(--ink);
+  line-height: 1;
+}
+
+.portrait-note {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact-body { max-width: 56ch; }
+
+.contact-lead { color: var(--muted); margin-bottom: 1.25rem; }
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.services li {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+}
+
+.contact-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.75rem 0;
+  margin-bottom: 3rem;
+}
+
+.contact-details dt {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.contact-details dd { font-size: 0.95rem; }
+
+.contact-details a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+}
+
+.contact-details a:hover { opacity: 0.6; }
+
+/* Formulär */
+
+.contact-form h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 1.75rem;
+}
+
+.field { margin-bottom: 1.4rem; }
+
+.field label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font: 400 1rem/1.5 var(--sans);
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  padding: 0.85rem 1rem;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  border-color: var(--ink);
+}
+
+.form-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem var(--gutter);
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.site-footer nav { display: flex; gap: 1.5rem; }
+
+.site-footer a { color: var(--ink); text-decoration: none; }
+.site-footer a:hover { opacity: 0.6; }
+
+/* ---------- Lightbox ---------- */
+
+.lightbox[hidden] { display: none; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(12, 11, 10, 0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 4.5rem var(--gutter) 2rem;
+}
+
+.lightbox img {
+  max-height: 76vh;
+  max-width: min(92vw, 1100px);
+  width: auto;
+}
+
+.lightbox-caption {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #B9B9B2;
+}
+
+.lightbox button {
+  font: 500 0.75rem/1 var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F4F4F1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem;
+}
+
+.lightbox button:hover { opacity: 0.6; }
+
+.lightbox-close { position: absolute; top: 1.25rem; right: var(--gutter); }
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+}
+
+.lightbox-prev { left: max(0.5rem, calc(var(--gutter) - 2rem)); }
+.lightbox-next { right: max(0.5rem, calc(var(--gutter) - 2rem)); }
+
+/* ---------- Scrollanimationer ---------- */
+
+/* Text och block: mjuk uppglidning */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Bilder: avtäcks nedifrån med en liten zoom-sättning */
+.work.reveal { transform: none; }
+
+.work.reveal img {
+  clip-path: inset(14% 0 0 0);
+  transform: scale(1.06);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work.reveal.is-visible img {
+  clip-path: inset(0 0 0 0);
+  transform: scale(1);
+}
+
+/* Helbleed-bilder: JS äger transformen (parallax), avtäckning sker bara via clip-path */
+.work.full.reveal img {
+  transform: scale(1.12);
+  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work.full.reveal.is-visible img { transform: scale(1.12); }
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .work.reveal img { opacity: 1; transform: none; clip-path: none; transition: none; }
+  .work.full .frame img { transform: none !important; }
+  .hero-media img, .hero-text { animation: none; }
+  .site-nav a, .cta, .cat-tab { transition: none; }
+}
+
+/* ---------- Responsivt ---------- */
+
+@media (max-width: 900px) {
+  .duo, .duo.rev { grid-template-columns: 1fr; }
+  .shift-down { margin-top: 0; }
+  .masonry { columns: 2; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-portrait { max-width: 340px; }
+}
+
+@media (max-width: 560px) {
+  .masonry { columns: 1; }
+  .site-nav { gap: 1rem; }
+  .site-nav a { font-size: 0.65rem; }
+  .hero-hint { display: none; }
+  .cat-tab { width: 100%; }
+}
