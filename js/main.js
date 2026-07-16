@@ -99,8 +99,7 @@ if (!prefersReducedMotion && parallaxFrames.length) {
   updateParallax();
 }
 
-// ---------- Katalog: kategorier (via flikar eller meny-hash) ----------
-const tabs = document.querySelectorAll('.cat-tab');
+// ---------- Katalog: kategori väljs via menyn (URL-hash) ----------
 const catTitle = document.getElementById('cat-title');
 const CAT_NAMES = {
   wedding: 'Wedding & Civil Marriage',
@@ -108,24 +107,19 @@ const CAT_NAMES = {
   commercial: 'Commercial',
 };
 
-function showCategory(cat, updateHash = true) {
-  if (!CAT_NAMES[cat]) return;
-  tabs.forEach((tab) => tab.setAttribute('aria-selected', String(tab.dataset.cat === cat)));
-  document.querySelectorAll('.cat-gallery').forEach((gallery) => {
-    gallery.hidden = gallery.id !== `cat-${cat}`;
-  });
-  if (catTitle) catTitle.textContent = CAT_NAMES[cat];
-  if (updateHash) history.replaceState(null, '', `#${cat}`);
-}
-
-if (tabs.length) {
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => showCategory(tab.dataset.cat));
-  });
+if (catTitle) {
+  const showCategory = (cat) => {
+    if (!CAT_NAMES[cat]) return;
+    document.querySelectorAll('.cat-gallery').forEach((gallery) => {
+      gallery.hidden = gallery.id !== `cat-${cat}`;
+    });
+    catTitle.textContent = CAT_NAMES[cat];
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  };
 
   const readHash = () => {
     const cat = location.hash.replace('#', '');
-    if (CAT_NAMES[cat]) showCategory(cat, false);
+    if (CAT_NAMES[cat]) showCategory(cat);
   };
 
   window.addEventListener('hashchange', readHash);
