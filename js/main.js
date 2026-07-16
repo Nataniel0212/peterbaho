@@ -108,12 +108,15 @@ const CAT_NAMES = {
 };
 
 if (catTitle) {
+  const switchPills = document.querySelectorAll('#cat-switch .cta');
+
   const showCategory = (cat) => {
     if (!CAT_NAMES[cat]) return;
     document.querySelectorAll('.cat-gallery').forEach((gallery) => {
       gallery.hidden = gallery.id !== `cat-${cat}`;
     });
     catTitle.textContent = CAT_NAMES[cat];
+    switchPills.forEach((pill) => pill.classList.toggle('ghost', pill.dataset.cat !== cat));
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
