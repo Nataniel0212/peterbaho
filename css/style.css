@@ -68,6 +68,52 @@ h1 em, h2 em, .statement em { font-style: italic; font-weight: 300; }
   color: var(--muted);
 }
 
+/* ---------- Intro: namnet visas, sedan dras ridån uppåt ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 900ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+body.intro-leave .intro { transform: translateY(-101%); }
+
+.intro-inner { text-align: center; }
+
+.intro-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  animation: intro-rise 700ms var(--ease-out) 150ms both;
+}
+
+.intro-tag {
+  margin-top: 0.9rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  animation: intro-rise 700ms var(--ease-out) 400ms both;
+}
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+body.has-intro { overflow: hidden; }
+
 /* ---------- Masthead: namnet centrerat överst ---------- */
 
 .masthead {
@@ -341,6 +387,66 @@ h1 em, h2 em, .statement em { font-style: italic; font-weight: 300; }
 }
 
 .empty-note { color: var(--muted); font-size: 0.9rem; }
+
+/* ---------- Civil Marriage: albumlänkar i översikten ---------- */
+
+.album-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.album-link img { transition: opacity var(--dur-std) var(--ease-out); }
+
+.album-link:hover img,
+.album-link:focus-visible img { opacity: 0.88; }
+
+.album-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.65rem;
+}
+
+.album-name {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.album-hint {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color var(--dur-fast);
+}
+
+.album-link:hover .album-hint,
+.album-link:focus-visible .album-hint { color: var(--ink); }
+
+/* Tillbaka-länk i albumvyn */
+.album-back { margin-bottom: 2rem; }
+
+.album-back.end { margin: 3rem 0 0; }
+
+.album-back a {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.15rem;
+}
+
+.album-back a:hover { opacity: 0.6; }
 
 /* ---------- Galleri (masonry) ---------- */
 
@@ -620,6 +726,7 @@ h1 em, h2 em, .statement em { font-style: italic; font-weight: 300; }
   .work.full .frame img { transform: none !important; }
   .menu, .menu-nav a { animation: none; }
   .menu-btn span, .cta { transition: none; }
+  .intro { display: none; }
 }
 
 /* ---------- Responsivt ---------- */

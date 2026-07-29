@@ -1,5 +1,27 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// ---------- Intro: namnet visas, ridån dras uppåt (en gång per besök) ----------
+const intro = document.querySelector('.intro');
+
+if (intro) {
+  let seen = false;
+  try { seen = !!sessionStorage.getItem('introSeen'); } catch (e) {}
+
+  if (prefersReducedMotion || seen) {
+    intro.remove();
+  } else {
+    try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
+    document.body.classList.add('has-intro');
+    setTimeout(() => {
+      document.body.classList.add('intro-leave');
+      setTimeout(() => {
+        intro.remove();
+        document.body.classList.remove('has-intro', 'intro-leave');
+      }, 1000);
+    }, 1600);
+  }
+}
+
 // ---------- Helskärmsmeny (tre streck) ----------
 const menuBtn = document.querySelector('.menu-btn');
 const menu = document.querySelector('.menu');
@@ -100,9 +122,11 @@ if (!prefersReducedMotion && parallaxFrames.length) {
 }
 
 // ---------- Katalog: kategori väljs via menyn (URL-hash) ----------
+// #civil visar översikten; #civil/<par> visar hela parets album.
 const catTitle = document.getElementById('cat-title');
 const CAT_NAMES = {
-  wedding: 'Wedding & Civil Marriage',
+  wedding: 'Wedding',
+  civil: 'Civil Marriage',
   event: 'Event',
   commercial: 'Commercial',
   personal: 'Personal Projects',
@@ -111,19 +135,28 @@ const CAT_NAMES = {
 if (catTitle) {
   const switchPills = document.querySelectorAll('#cat-switch .cta');
 
-  const showCategory = (cat) => {
-    if (!CAT_NAMES[cat]) return;
+  const showSection = (sectionId, title, pillCat) => {
+    const section = document.getElementById(sectionId);
+    if (!section) return false;
     document.querySelectorAll('.cat-gallery').forEach((gallery) => {
-      gallery.hidden = gallery.id !== `cat-${cat}`;
+      gallery.hidden = gallery.id !== sectionId;
     });
-    catTitle.textContent = CAT_NAMES[cat];
-    switchPills.forEach((pill) => pill.classList.toggle('ghost', pill.dataset.cat !== cat));
+    catTitle.textContent = title;
+    switchPills.forEach((pill) => pill.classList.toggle('ghost', pill.dataset.cat !== pillCat));
     window.scrollTo({ top: 0, behavior: 'auto' });
+    // Nya sektioner kan ha oanimerade reveals — visa dem direkt
+    section.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => el.classList.add('is-visible'));
+    return true;
   };
 
   const readHash = () => {
-    const cat = location.hash.replace('#', '');
-    if (CAT_NAMES[cat]) showCategory(cat);
+    const hash = decodeURIComponent(location.hash.replace('#', ''));
+    if (hash.startsWith('civil/')) {
+      const slug = hash.slice('civil/'.length);
+      const album = document.getElementById(`cat-civil-${slug}`);
+      if (album && showSection(album.id, album.dataset.album || 'Civil Marriage', 'civil')) return;
+    }
+    if (CAT_NAMES[hash]) showSection(`cat-${hash}`, CAT_NAMES[hash], hash);
   };
 
   window.addEventListener('hashchange', readHash);
@@ -146,7 +179,7 @@ if (lightbox) {
   function visibleWorks(fromWork) {
     const gallery = fromWork.closest('.cat-gallery');
     const scope = gallery || document;
-    return Array.from(scope.querySelectorAll('.work'));
+    return Array.from(scope.querySelectorAll('figure.work'));
   }
 
   function show(index) {
@@ -177,7 +210,7 @@ if (lightbox) {
     if (lastFocused) lastFocused.focus();
   }
 
-  document.querySelectorAll('.work').forEach((work) => {
+  document.querySelectorAll('figure.work').forEach((work) => {
     work.addEventListener('click', () => openLightbox(work));
   });
 
