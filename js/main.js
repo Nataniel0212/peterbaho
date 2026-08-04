@@ -17,9 +17,27 @@ if (intro) {
     const introName = intro.querySelector('.intro-name');
     const target = document.querySelector('.masthead-name');
 
-    // Vänta in typsnittet innan vi mäter — annars mäts Georgia-fallbackens
-    // bredd och namnet landar snett när Italiana swappar in.
+    // Namnet visas forst nar typsnittet finns. Ritas det i Georgia och byts
+    // mot Italiana mitt i rorelsen ser det ut som ett hack, och en matning
+    // gjord pa fallbackens bredd far namnet att landa snett.
+    // Nodutgang efter 1,5s sa intron inte fastnar om typsnittet aldrig kommer.
     const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+    const ready = Promise.race([
+      fontsReady,
+      new Promise((resolve) => setTimeout(resolve, 1500)),
+    ]);
+
+    // Rise-animationen lagger translateY pa namnet. Matar vi mitt i den blir
+    // FLIP-avstandet upp till 20px fel och namnet landar bredvid sidhuvudet.
+    // Vantar darfor in att namnets egna animationer ar klara.
+    const riseDone = () => {
+      const running = introName ? introName.getAnimations().map((a) => a.finished) : [];
+      return Promise.race([
+        Promise.all(running).catch(() => {}),
+        new Promise((resolve) => setTimeout(resolve, 400)),
+      ]);
+    };
+
     const leave = () => {
       // FLIP: mät hur långt namnet har kvar till sin plats i sidhuvudet och
       // flytta hela intro-inner dit, så att namn och underrubrik landar rätt.
@@ -36,11 +54,14 @@ if (intro) {
 
       setTimeout(() => {
         intro.remove();
-        document.body.classList.remove('has-intro', 'intro-leave');
+        document.body.classList.remove('has-intro', 'intro-leave', 'intro-ready');
       }, 950);
     };
 
-    setTimeout(() => { fontsReady.then(leave); }, 1500);
+    ready.then(() => {
+      document.body.classList.add('intro-ready');   // namnet stiger fram
+      setTimeout(() => { riseDone().then(leave); }, 1500);  // hall kvar, dra sedan undan
+    });
   }
 }
 
