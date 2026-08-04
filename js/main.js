@@ -12,13 +12,35 @@ if (intro) {
   } else {
     try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
     document.body.classList.add('has-intro');
-    setTimeout(() => {
+
+    const inner = intro.querySelector('.intro-inner');
+    const introName = intro.querySelector('.intro-name');
+    const target = document.querySelector('.masthead-name');
+
+    // Vänta in typsnittet innan vi mäter — annars mäts Georgia-fallbackens
+    // bredd och namnet landar snett när Italiana swappar in.
+    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+    const leave = () => {
+      // FLIP: mät hur långt namnet har kvar till sin plats i sidhuvudet och
+      // flytta hela intro-inner dit, så att namn och underrubrik landar rätt.
+      if (inner && introName && target) {
+        const from = introName.getBoundingClientRect();
+        const to = target.getBoundingClientRect();
+        // .masthead-name är ett block i full bredd — jämför mittpunkter i sidled,
+        // annars blir förflyttningen hela gutterbredden fel.
+        const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+        const dy = to.top - from.top;
+        inner.style.transform = `translate(${Math.round(dx)}px, ${Math.round(dy)}px)`;
+      }
       document.body.classList.add('intro-leave');
+
       setTimeout(() => {
         intro.remove();
         document.body.classList.remove('has-intro', 'intro-leave');
-      }, 1000);
-    }, 1600);
+      }, 950);
+    };
+
+    setTimeout(() => { fontsReady.then(leave); }, 1500);
   }
 }
 
@@ -237,7 +259,7 @@ if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const data = new FormData(form);
-    const subject = `Förfrågan: ${data.get('type')} — ${data.get('name')}`;
+    const subject = `Förfrågan: ${data.get('type')} från ${data.get('name')}`;
     const body = [
       `Namn: ${data.get('name')}`,
       `Mejl: ${data.get('email')}`,
@@ -246,6 +268,6 @@ if (form) {
       String(data.get('message')),
     ].join('\n');
     window.location.href =
-      `mailto:hej@peterbaho.se?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      `mailto:peter-baho@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 }

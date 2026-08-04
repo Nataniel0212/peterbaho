@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kontakt — Peter Baho</title>
-  <meta name="description" content="Kontakta fotograf Peter Baho i Stockholm — wedding, event och commercial-uppdrag.">
+  <title>Kontakt | Peter Baho</title>
+  <meta name="description" content="Kontakta fotograf Peter Baho i Stockholm för wedding, event och commercial-uppdrag.">
   <meta name="theme-color" content="#FAFAF8">
   <link rel="canonical" href="https://nataniel0212.github.io/peterbaho/kontakt.html">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111110'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-size='28' fill='%23FAFAF8' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- Atmosfär: fotografiet syns bara som ljus bakom sidan, se .atmos -->
+  <div class="atmos" aria-hidden="true">
+    <img src="images/civil/charbel-och-eva/charbel-och-eva-06.jpg" alt="" width="1280" height="1600" fetchpriority="low">
+  </div>
 
   <!-- Meny (tre streck) -->
   <button class="menu-btn" aria-label="Öppna meny" aria-expanded="false" aria-controls="menu">
@@ -37,6 +42,7 @@
     <a class="masthead-name" href="index.html">Peter Baho</a>
   </header>
 
+
   <main class="page">
 
     <header class="page-head">
@@ -47,32 +53,29 @@
     <div class="contact-layout">
 
       <div class="contact-portrait reveal">
-        <!-- BYT UT: porträtt av Peter när det finns -->
-        <div class="portrait-placeholder" role="img" aria-label="Porträtt av Peter Baho kommer snart">
-          <span class="monogram">PB</span>
-          <span class="portrait-note">Porträtt på väg</span>
-        </div>
-        <p class="frame-label">Peter Baho — Stockholm</p>
+        <!-- BYT UT: högupplöst porträtt när Peter levererar ett -->
+        <img class="portrait-photo" src="images/portrait.jpg" alt="Porträtt av Peter Baho" width="122" height="122" loading="lazy">
+        <p class="frame-label">Peter Baho, Stockholm</p>
       </div>
 
       <div class="contact-body">
         <p class="contact-lead reveal">
-          Skriv några rader om vad du planerar — datum, plats och vad du är ute
-          efter — så återkommer jag inom ett dygn.
+          Skriv några rader om vad du planerar: datum, plats och vad du är ute
+          efter. Jag återkommer inom ett dygn.
         </p>
 
         <dl class="contact-details reveal">
           <div>
             <dt>Mejl</dt>
-            <dd><a href="mailto:hej@peterbaho.se">hej@peterbaho.se</a></dd>
+            <dd><a href="mailto:peter-baho@outlook.com">peter-baho@outlook.com</a></dd>
           </div>
           <div>
             <dt>Instagram</dt>
-            <dd><a href="https://instagram.com" target="_blank" rel="noopener">@peterbaho</a></dd>
+            <dd><a href="https://www.instagram.com/peterbaho/" target="_blank" rel="noopener">@peterbaho</a></dd>
           </div>
           <div>
             <dt>Bas</dt>
-            <dd>Stockholm — uppdrag i hela Sverige</dd>
+            <dd>Stockholm, uppdrag i hela Sverige</dd>
           </div>
         </dl>
 
@@ -97,7 +100,7 @@
             </select>
           </div>
           <div class="field">
-            <label for="f-msg">Berätta kort — datum, plats, idéer</label>
+            <label for="f-msg">Berätta kort om datum, plats och idéer</label>
             <textarea id="f-msg" name="message" rows="5" required></textarea>
           </div>
           <button class="cta" type="submit">Skicka</button>
@@ -121,11 +124,11 @@
   </main>
 
   <footer class="site-footer">
-    <p>© 2026 Peter Baho — Stockholm</p>
+    <p>© 2026 Peter Baho, Stockholm</p>
     <nav>
       <a href="index.html">Hem</a>
       <a href="info.html">Info</a>
-      <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.instagram.com/peterbaho/" target="_blank" rel="noopener">Instagram</a>
     </nav>
   </footer>
 
